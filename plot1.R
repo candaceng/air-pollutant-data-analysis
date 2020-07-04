@@ -2,10 +2,14 @@
 NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
-# sum up emissions by year
+# Plot 1
 yearly_emissions <- aggregate(NEI$Emissions, by=list(year=NEI$year), FUN=sum)
-
-# generate plot
 png("plot1.png", width=480, height=480)
 with(yearly_emissions, plot(x = year, y = x, type="l", ylab = "Total Annual Emissions (tons)",xlab = "Year", main = "Total Emissions in the US by Year", col = "red"))
 dev.off()
+
+#Plot 2
+baltimore <- subset(NEI, NEI$fips=="24510")
+baltimore_yearly <- aggregate(baltimore$Emissions, by=list(baltimore$year), FUN=sum)
+png("plot2.png", width=480, height=480)
+with(baltimore_yearly, plot(x = Group.1, y = x, type="l", ylab="Total Annual Emissions (tons)", xlab="Year", main="Total Emissions in Baltimore by Year", col="blue"))
