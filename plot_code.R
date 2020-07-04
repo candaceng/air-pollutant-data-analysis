@@ -42,3 +42,13 @@ colnames(baltimore_vehicle_yearly) <- c("Year", "Emissions")
 png("plot5.png", width=480, height=480)
 plot(baltimore_vehicle_yearly$Year, baltimore_vehicle_yearly$Emissions, main="Yearly Vehicle Emissions in Baltimore", ylab="Emissions", xlab="Year", col="red", type="h")
 dev.off()
+
+# Plot 6
+balt_la <- subset(NEI, (NEI$fips == "06037" | NEI$fips == "24510") & NEI$type == "ON-ROAD")
+balt_la_yearly <- aggregate(balt_la$Emissions, by=list(balt_la$year, balt_la$fips), FUN=sum)
+colnames(balt_la_yearly) <- c("Year", "City", "Emissions")
+png("plot6.png", width=480, height=480)
+qplot(Year, Emissions, data=balt_la_yearly, color=City, geom="line") +
+    ggtitle("Yearly Vehicle Emissions in Baltimore (24510) vs. LA (06037)") +
+    ylab("Emissions (tons)") + xlab("Year")
+dev.off()
