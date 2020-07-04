@@ -34,3 +34,11 @@ colnames(coal_yearly) <- c("Year", "Emissions")
 png("plot4.png", width=480, height=480)
 plot(coal_yearly$Year, coal_yearly$Emissions, xlab="Year", type="h", ylab="Emissions", main="Annual Coal Related Emissions", col="red")
 dev.off()
+
+# Plot 5
+baltimore_vehicle <- subset(NEI, NEI$fips == "24510" & NEI$type == "ON-ROAD")
+baltimore_vehicle_yearly <- aggregate(baltimore_vehicle$Emissions, by=list(baltimore_vehicle$year), FUN=sum)
+colnames(baltimore_vehicle_yearly) <- c("Year", "Emissions")
+png("plot5.png", width=480, height=480)
+plot(baltimore_vehicle_yearly$Year, baltimore_vehicle_yearly$Emissions, main="Yearly Vehicle Emissions in Baltimore", ylab="Emissions", xlab="Year", col="red", type="h")
+dev.off()
